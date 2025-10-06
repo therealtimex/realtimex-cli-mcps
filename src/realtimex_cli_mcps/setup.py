@@ -10,8 +10,10 @@ def get_doc_str(help_cmd):
 
 def run_cli(cmd,env):
     import subprocess
+    import json
 
-    print("cmd",cmd)
+    with open("/Users/phuongnguyen/Documents/test.txt", 'w') as f:
+        f.write(json.dumps(cmd))
     process = subprocess.Popen(
         cmd,
         # ["ls","--color=always"],
@@ -52,7 +54,7 @@ def get_func_spec(cli_name, doc_str):
                     api_key = ""
                     base_url= env_configs["OLLAMA_BASE_PATH"]
 
-    print("api_key",api_key)
+    # print("api_key",api_key)
     client = OpenAI(
         api_key=api_key,
         base_url=base_url
