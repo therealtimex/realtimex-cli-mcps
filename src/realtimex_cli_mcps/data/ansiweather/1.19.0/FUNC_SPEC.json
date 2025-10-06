@@ -1,0 +1,90 @@
+{
+  "name": "ansiweather",
+  "docstring": "Fetch and display weather information with optional forecast and various display settings.\n\nParameters:\n- location (str): Specify location.\n- system (str): Specify unit system to use ('metric' or 'imperial').\n- days (int): Number of upcoming days to show forecast for.\n- forecast_five_days (bool): Toggle forecast mode for the next five days.\n- ansi_colors (bool): Toggle ANSI colors display.\n- symbols (bool): Toggle symbols display.\n- api_key (str): Specify OpenWeatherMap API key.\n- uv_index (bool): Toggle UV Index display.\n- wind (bool): Toggle wind data display.\n- humidity (bool): Toggle humidity data display.\n- feels_like (bool): Toggle Feels like display.\n- pressure (bool): Toggle pressure data display.\n- daylight (bool): Toggle daylight data display.\n- version (bool): Display version.",
+  "variables": [
+    {
+      "name": "location",
+      "type": "str",
+      "default": "",
+      "cli_parameter": "-l"
+    },
+    {
+      "name": "system",
+      "type": "str",
+      "default": "",
+      "cli_parameter": "-u"
+    },
+    {
+      "name": "days",
+      "type": "int",
+      "default": "",
+      "cli_parameter": "-f"
+    },
+    {
+      "name": "forecast_five_days",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-F"
+    },
+    {
+      "name": "ansi_colors",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-a"
+    },
+    {
+      "name": "symbols",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-s"
+    },
+    {
+      "name": "api_key",
+      "type": "str",
+      "default": "",
+      "cli_parameter": "-k"
+    },
+    {
+      "name": "uv_index",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-i"
+    },
+    {
+      "name": "wind",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-w"
+    },
+    {
+      "name": "humidity",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-h"
+    },
+    {
+      "name": "feels_like",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-H"
+    },
+    {
+      "name": "pressure",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-p"
+    },
+    {
+      "name": "daylight",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-d"
+    },
+    {
+      "name": "version",
+      "type": "bool",
+      "default": "",
+      "cli_parameter": "-v"
+    }
+  ]
+}

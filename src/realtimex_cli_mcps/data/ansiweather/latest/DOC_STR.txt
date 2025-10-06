@@ -1,0 +1,46 @@
+Usage: ansiweather [-l location] [-u system] [-f days] [-F] [-a value]
+            [-s value] [-k key] [-i value] [-w value] [-h value]
+            [-H value] [-p value] [-d value] [-v]
+Options:
+-l location
+        Specify location.
+
+-u system
+        Specify unit system to use ( metric or imperial ).
+
+-f days
+        Toggle forecast mode for the specified number of upcoming days.
+
+-F      Toggle forecast mode for the next five days.
+
+-a value
+        Toggle ANSI colors display ( true or false ).
+
+-s value
+        Toggle symbols display ( true or false ).
+
+-k key  Specify OpenWeatherMap API key.
+
+-i value
+        Toggle UV Index display ( true or false ).
+
+-w value
+        Toggle wind data display ( true or false ).
+
+-h value
+        Toggle humidity data display ( true or false ).
+
+-H value
+        Toggle Feels like display ( true or false ).
+
+-p value
+        Toggle pressure data display ( true or false ).
+
+-d value
+        Toggle daylight data display ( true or false ).
+
+-v      Display version.
+
+Example:
+Display forecast using metric units for the next five days (showing symbols and daylight data) for Rzeszow, Poland:
+ansiweather -l "Rzeszow,PL" -u metric -s true -f 5 -d true

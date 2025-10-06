@@ -1,0 +1,21 @@
+[project]
+name = "realtimex-cli-mcps"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "rta_phuongnguyen", email = "phuongnguyen@rtanalytics.vn" }
+]
+requires-python = ">=3.11"
+dependencies = [
+]
+
+[project.scripts]
+run-cli-as-mcps = "realtimex_cli_mcps.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.8.2,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.setuptools.package-data]
+"realtimex-cli-mcps" = ["data/**/DOC_STR.txt","data/**/FUNC_SPEC.json"]
