@@ -77,8 +77,35 @@ def unzip_file(file_path, extract_to, folder=""):
 def get_realtimex_dir():
     return os.path.join(os.path.expanduser("~"),".realtimex.ai")
 
+def get_cache_dir():
+    return os.path.join(os.path.expanduser("~"),".cache","realtimex-cli-mcps")
+
 def get_realtimex_cli_tools_dir():
     return os.path.join(get_realtimex_dir(),"Resources","cli-tools")
+
+def load_env_configs():
+    from dotenv import dotenv_values
+
+    env_file_path = os.path.join(get_realtimex_dir(),"Resources","server",".env.development")
+    if os.path.exists(env_file_path):
+        env_configs = dotenv_values(env_file_path)
+        return env_configs
+        # if not "LLM_PROVIDER" in env_configs:
+        #     return None
+        # if env_configs["LLM_PROVIDER"] == "openai":
+        #     if "OPEN_AI_KEY" in env_configs:
+        #         os.environ['OPENAI_API_KEY'] = env_configs["OPEN_AI_KEY"]
+        #         os.environ['OPENAI_BASE_URL'] = "https://api.openai.com/v1"
+        # if env_configs["LLM_PROVIDER"] == "realtimexai":
+        #     if "REALTIMEX_AI_BASE_PATH" in env_configs and "REALTIMEX_AI_API_KEY" in env_configs:
+        #         os.environ['OPENAI_API_KEY'] = env_configs["REALTIMEX_AI_API_KEY"]
+        #         os.environ['OPENAI_BASE_URL'] = env_configs["REALTIMEX_AI_BASE_PATH"]
+        # if env_configs["LLM_PROVIDER"] == "ollama":
+        #     if "OLLAMA_BASE_PATH" in env_configs:
+        #         os.environ['OPENAI_API_KEY'] = ""
+        #         os.environ['OPENAI_BASE_URL'] = env_configs["OLLAMA_BASE_PATH"]
+    return None
+
 
 def get_uvx_executable():
     import platform
@@ -97,24 +124,67 @@ def set_current_version():
 def will_reinstall(version):
     pass
 
+def save_func_spec_cache(cli_name,cli_version,data):
+    import json
+    import os
+    
+    os.makedirs(os.path.join(get_cache_dir(),"data",cli_name,cli_version),exist_ok=True)
+    data_cache_path = os.path.join(get_cache_dir(),"data",cli_name,cli_version,"FUNC_SPEC.json")
+    with open(data_cache_path, 'w') as f:
+        json.dump(data, f)
+
+    return None
+
+def save_doc_str_cache(cli_name,cli_version,data):
+    import json
+    
+    os.makedirs(os.path.join(get_cache_dir(),"data",cli_name,cli_version),exist_ok=True)
+    data_cache_path = os.path.join(get_cache_dir(),"data",cli_name,cli_version,"DOC_STR.txt")
+    with open(data_cache_path, 'w') as f:
+        f.write(data)
+
+    return None
+
 def load_func_spec(cli_name,cli_version):
     import pkgutil
     import json
+    import os
     
-    data_bytes = pkgutil.get_data('realtimex_cli_mcps', f'data/{cli_name}/{cli_version}/FUNC_SPEC.json')
-    if data_bytes:
-        data_str = data_bytes.decode('utf-8')
-        data = json.loads(data_str)
-        return data
+    try:
+        data_bytes = pkgutil.get_data('realtimex_cli_mcps', f'data/{cli_name}/{cli_version}/FUNC_SPEC.json')
+        if data_bytes:
+            data_str = data_bytes.decode('utf-8')
+            data = json.loads(data_str)
+            return data
+    except Exception:
+        pass
+    
+
+    data_cache_path = os.path.join(get_cache_dir(),"data",cli_name,cli_version,"FUNC_SPEC.json")
+    if os.path.exists(data_cache_path):
+        with open(data_cache_path, 'r') as file:
+            data = json.load(file)
+            return data
+
     return None
 
 def load_doc_str(cli_name,cli_version):
     import pkgutil
+    import os
 
-    data_bytes = pkgutil.get_data('realtimex_cli_mcps', f'data/{cli_name}/{cli_version}/DOC_STR.txt')
-    if data_bytes:
-        data = data_bytes.decode('utf-8')
-        return data
+    try:
+        data_bytes = pkgutil.get_data('realtimex_cli_mcps', f'data/{cli_name}/{cli_version}/DOC_STR.txt')
+        if data_bytes:
+            data = data_bytes.decode('utf-8')
+            return data
+    except Exception:
+        pass
+
+    data_cache_path = os.path.join(get_cache_dir(),"data",cli_name,cli_version,"DOC_STR.txt")
+    if os.path.exists(data_cache_path):
+        with open(data_cache_path, 'r') as file:
+            return file.read()
+
     return None
 
 def set_chmod_x(file_path):

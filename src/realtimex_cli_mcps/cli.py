@@ -5,11 +5,10 @@ import json
 
 from .setup import setup
 
-mcp = FastMCP("Demo 🚀")
+mcp = FastMCP("RealTimeX.AI CLI MCPS")
 
 def main():
-    tool_packages = os.environ['TOOL_PACKAGES']
-    # print(tool_packages)
+    tool_packages = os.environ.get("TOOL_PACKAGES", default="[]")
     tool_packages = json.loads(tool_packages)
     # tool_packages = [
     #   {
@@ -29,23 +28,7 @@ def main():
     #     "help_str": ""
     #   },
     #   {
-    #     "name": "doctranslate_translate",
-    #     "cmd": [
-    #       "uvx",
-    #       "--from",
-    #       "git+https://github.com/therealtimex/doctranslate[docling]",
-    #       "doctranslate",
-    #       "translate"
-    #     ],
-    #     "help_cmd": [
-    #       "uvx",
-    #       "--from",
-    #       "git+https://github.com/therealtimex/doctranslate[docling]",
-    #       "doctranslate",
-    #       "translate",
-    #       "-h"
-    #     ],
-    #     "help_str": ""
+    #     "name": "doctranslate_translate@latest"
     #   }
     # ]
 

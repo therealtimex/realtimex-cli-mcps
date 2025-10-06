@@ -1,4 +1,4 @@
-from .utils import get_uvx_executable
+from .utils import get_uvx_executable, save_func_spec_cache, save_doc_str_cache, load_env_configs
 
 def get_doc_str(help_cmd):
     import subprocess
@@ -8,7 +8,7 @@ def get_doc_str(help_cmd):
     
     return docstring
 
-def run_cli(cmd):
+def run_cli(cmd,env):
     import subprocess
 
 
@@ -18,6 +18,7 @@ def run_cli(cmd):
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
+        env=env,
         text=True,
         shell=False  # Don't use shell=True unless you really need it
     )
@@ -31,8 +32,25 @@ def get_func_spec(cli_name, doc_str):
     import json
     import os
 
-    api_key = os.environ['OPENAI_API_KEY']
-    base_url = os.environ['OPENAI_BASE_URL']
+    env_configs = load_env_configs()
+
+    api_key = os.environ.get("OPENAI_API_KEY", default=None)
+    base_url = os.environ.get("OPENAI_BASE_URL", default=None)
+    
+    if env_configs:
+        if "LLM_PROVIDER" in env_configs:
+            if env_configs["LLM_PROVIDER"] == "openai":
+                if "OPEN_AI_KEY" in env_configs:
+                    api_key= env_configs["OPEN_AI_KEY"]
+                    base_url = "https://api.openai.com/v1"
+            if env_configs["LLM_PROVIDER"] == "realtimexai":
+                if "REALTIMEX_AI_BASE_PATH" in env_configs and "REALTIMEX_AI_API_KEY" in env_configs:
+                    api_key = env_configs["REALTIMEX_AI_API_KEY"]
+                    base_url = env_configs["REALTIMEX_AI_BASE_PATH"]
+            if env_configs["LLM_PROVIDER"] == "ollama":
+                if "OLLAMA_BASE_PATH" in env_configs:
+                    api_key = ""
+                    base_url= env_configs["OLLAMA_BASE_PATH"]
 
     client = OpenAI(
         api_key=api_key,
@@ -109,7 +127,7 @@ def get_func_spec(cli_name, doc_str):
 
     return function
 
-def create_function_from_json(cli_command, spec):
+def create_function_from_json(cli_command, spec, env):
     import textwrap
 
     name = spec['name']
@@ -162,19 +180,21 @@ def create_function_from_json(cli_command, spec):
                 cli_command.append(cli_parameter_value)
         
     # print(cli_command)
-    return run_cli(cli_command)
+    return run_cli(cli_command,env)
 """
-    print(func_code)
+    # print(func_code)
     # Local namespace for exec
     namespace = {}
-    namespace.update({"spec": spec, "command":cli_command, "run_cli": run_cli})  # inject parent vars
+    namespace.update({"spec": spec, "command":cli_command, "run_cli": run_cli, "env": env})  # inject parent vars
     exec(func_code, namespace)
     return namespace[name]
 
 def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cli_version:str = None):
     import json
+    import os
 
     func_spec = None
+    my_env = os.environ.copy()
 
     if exec_cmd:
         if exec_cmd[0] == "uvx":
@@ -185,16 +205,23 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
 
     if cli_name == "ansiweather":
         from .tools.ansiweather.setup import setup as ansiweather_setup
-        exec_cmd, help_cmd, doc_str, func_spec = ansiweather_setup(cli_name,cli_version)
+        exec_cmd, help_cmd, doc_str, func_spec, my_env = ansiweather_setup(cli_name,cli_version)
+
+    if cli_name == "doctranslate_translate":
+        from .tools.doctranslate_translate.setup import setup as doctranslate_translate_setup
+        exec_cmd, help_cmd, doc_str, func_spec, my_env = doctranslate_translate_setup(cli_name,cli_version)
 
     if not doc_str and help_cmd:
         doc_str = get_doc_str(help_cmd)
+        save_doc_str_cache(cli_name,cli_version,doc_str)
         # print(doc_str)
 
     if not func_spec:
         func_spec = get_func_spec(cli_name, doc_str)
+        save_func_spec_cache(cli_name,cli_version,func_spec)
         # print(func_spec)
     
-    func = create_function_from_json(exec_cmd, func_spec)
+    
+    func = create_function_from_json(exec_cmd, func_spec, my_env)
 
     return func

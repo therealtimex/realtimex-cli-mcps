@@ -27,9 +27,11 @@ def setup(cli_name,cli_version):
 
         set_chmod_x(exec_path)
     
-    exec_path = os.path.join(install_dir,"ansiweather")
+    exec_path = [os.path.join(install_dir,"ansiweather")]
+    help_path = None
+    my_env = os.environ.copy()
 
     doc_str = load_doc_str(cli_name, cli_version)
     func_spec = load_func_spec(cli_name, cli_version)
 
-    return [exec_path], None, doc_str, func_spec
+    return exec_path, help_path, doc_str, func_spec, my_env
