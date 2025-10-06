@@ -59,7 +59,7 @@ def main():
 
     mcp.run()
 
-    
+main()    
 # if __name__ == "__main__":
 #     run()
 
