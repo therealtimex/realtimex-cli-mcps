@@ -52,6 +52,7 @@ def get_func_spec(cli_name, doc_str):
                     api_key = ""
                     base_url= env_configs["OLLAMA_BASE_PATH"]
 
+    print("api_key",api_key)
     client = OpenAI(
         api_key=api_key,
         base_url=base_url
