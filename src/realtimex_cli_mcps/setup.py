@@ -114,7 +114,7 @@ def create_function_from_json(cli_command, spec):
 
     name = spec['name']
     # docstring = docstring.replace('"""','"""')
-    docstring = textwrap.indent(spec['docstring'], "    ").replace('"""','"""')
+    docstring = textwrap.indent(spec['docstring'], "    ").replace('"""','')
 
     # Build function signature
     params = []
@@ -164,7 +164,7 @@ def create_function_from_json(cli_command, spec):
     # print(cli_command)
     return run_cli(cli_command)
 """
-    # print(func_code)
+    print(func_code)
     # Local namespace for exec
     namespace = {}
     namespace.update({"spec": spec, "command":cli_command, "run_cli": run_cli})  # inject parent vars
