@@ -65,7 +65,7 @@ async def test():
     async with Client(mcp) as client:
         tools = await client.list_tools()
         print("tools",tools)
-        result = await client.call_tool("cowsay", {"character": "cow", "text":"hello world"})
+        result = await client.call_tool("ansiweather", {"location": "Hanoi"})
         print(result.content[0].text)
 
 # if __name__ == "__main__":

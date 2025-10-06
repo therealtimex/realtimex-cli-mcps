@@ -11,7 +11,7 @@ def get_doc_str(help_cmd):
 def run_cli(cmd,env):
     import subprocess
 
-
+    print("cmd",cmd)
     process = subprocess.Popen(
         cmd,
         # ["ls","--color=always"],
