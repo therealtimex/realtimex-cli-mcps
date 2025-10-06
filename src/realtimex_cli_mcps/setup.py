@@ -12,8 +12,8 @@ def run_cli(cmd,env):
     import subprocess
     import json
 
-    with open("/Users/phuongnguyen/Documents/test.txt", 'w') as f:
-        f.write(json.dumps(cmd))
+    # with open("/Users/phuongnguyen/Documents/test.txt", 'w') as f:
+    #     f.write(json.dumps(cmd))
     process = subprocess.Popen(
         cmd,
         # ["ls","--color=always"],
@@ -130,7 +130,7 @@ def get_func_spec(cli_name, doc_str):
 
     return function
 
-def create_function_from_json(cli_command, spec, env):
+def create_function_from_json(my_cli_command, spec, env):
     import textwrap
 
     name = spec['name']
@@ -182,7 +182,7 @@ def create_function_from_json(cli_command, spec, env):
             if cli_parameter_value and cli_parameter_value != 'None':
                 if cli_parameter_name:
                     cli_command.append(cli_parameter_name)
-                cli_command.append(cli_parameter_value)
+                cli_command.append(str(cli_parameter_value))
         
     # print(cli_command)
     return run_cli(cli_command,env)
@@ -190,7 +190,7 @@ def create_function_from_json(cli_command, spec, env):
     # print(func_code)
     # Local namespace for exec
     namespace = {}
-    namespace.update({"spec": spec, "command":cli_command, "run_cli": run_cli, "env": env})  # inject parent vars
+    namespace.update({"spec": spec, "command":my_cli_command, "run_cli": run_cli, "env": env})  # inject parent vars
     exec(func_code, namespace)
     return namespace[name]
 
