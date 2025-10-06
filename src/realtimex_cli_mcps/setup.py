@@ -144,6 +144,8 @@ def create_function_from_json(cli_command, spec, env):
             default_repr = "''"
         else:
             default_repr = repr(default)
+        if var['type'] == "list":
+            var['type'] = "str"
         params.append(f"{var['name']}:{var['type']}={default_repr}")
     params_str = ", ".join(params)
 
