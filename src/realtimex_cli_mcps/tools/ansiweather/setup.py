@@ -9,7 +9,7 @@ def setup(cli_name,cli_version):
     
     install_dir = os.path.join(get_realtimex_cli_tools_dir(),"ansiweather")
 
-    print("install_dir",install_dir)
+    # print("install_dir",install_dir)
 
     if not os.path.exists(install_dir):
 

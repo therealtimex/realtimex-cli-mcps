@@ -1,5 +1,5 @@
 # server.py
-from fastmcp import FastMCP
+from fastmcp import FastMCP, Client
 import os
 import json
 
@@ -58,9 +58,18 @@ def main():
         mcp.tool(func)
 
     mcp.run()
+    # import asyncio
+    # asyncio.run(test())
 
-main()    
+async def test():
+    async with Client(mcp) as client:
+        tools = await client.list_tools()
+        print("tools",tools)
+        result = await client.call_tool("cowsay", {"character": "cow", "text":"hello world"})
+        print(result.content[0].text)
+
 # if __name__ == "__main__":
-#     run()
+#     import asyncio
+#     asyncio.run(test())
 
         
