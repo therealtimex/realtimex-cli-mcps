@@ -1,4 +1,4 @@
-from .utils import get_uvx_executable, save_func_spec_cache, save_doc_str_cache, load_env_configs
+from .utils import get_uvx_executable, save_func_spec_cache, save_doc_str_cache, load_env_configs, load_doc_str, load_func_spec
 
 def get_doc_str(help_cmd):
     import subprocess
@@ -208,10 +208,12 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
     if cli_name == "ansiweather":
         from .tools.ansiweather.setup import setup as ansiweather_setup
         exec_cmd, help_cmd, doc_str, func_spec, my_env = ansiweather_setup(cli_name,cli_version)
-
-    if cli_name == "doctranslate_translate":
+    elif cli_name == "doctranslate_translate":
         from .tools.doctranslate_translate.setup import setup as doctranslate_translate_setup
         exec_cmd, help_cmd, doc_str, func_spec, my_env = doctranslate_translate_setup(cli_name,cli_version)
+    else:
+        doc_str = load_doc_str(cli_name, cli_version)
+        func_spec = load_func_spec(cli_name, cli_version)
 
     if not doc_str and help_cmd:
         doc_str = get_doc_str(help_cmd)
