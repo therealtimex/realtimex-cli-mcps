@@ -1,50 +1,53 @@
 # server.py
 from fastmcp import FastMCP
 import os
+import json
 
 from .setup import setup
 
 mcp = FastMCP("Demo 🚀")
 
 def main():
-    # tool_packages = os.environ['TOOL_PACKAGES']
-    tool_packages = [
-      {
-        "name": "ansiweather@latest"
-      },
-      {
-        "name": "cowsay",
-        "cmd": [
-          "uvx",
-          "cowsay"
-        ],
-        "help_cmd": [
-          "uvx",
-          "cowsay",
-          "-h"
-        ],
-        "help_str": ""
-      },
-      {
-        "name": "doctranslate_translate",
-        "cmd": [
-          "uvx",
-          "--from",
-          "git+https://github.com/therealtimex/doctranslate[docling]",
-          "doctranslate",
-          "translate"
-        ],
-        "help_cmd": [
-          "uvx",
-          "--from",
-          "git+https://github.com/therealtimex/doctranslate[docling]",
-          "doctranslate",
-          "translate",
-          "-h"
-        ],
-        "help_str": ""
-      }
-    ]
+    tool_packages = os.environ['TOOL_PACKAGES']
+    # print(tool_packages)
+    tool_packages = json.loads(tool_packages)
+    # tool_packages = [
+    #   {
+    #     "name": "ansiweather@latest"
+    #   },
+    #   {
+    #     "name": "cowsay",
+    #     "cmd": [
+    #       "uvx",
+    #       "cowsay"
+    #     ],
+    #     "help_cmd": [
+    #       "uvx",
+    #       "cowsay",
+    #       "-h"
+    #     ],
+    #     "help_str": ""
+    #   },
+    #   {
+    #     "name": "doctranslate_translate",
+    #     "cmd": [
+    #       "uvx",
+    #       "--from",
+    #       "git+https://github.com/therealtimex/doctranslate[docling]",
+    #       "doctranslate",
+    #       "translate"
+    #     ],
+    #     "help_cmd": [
+    #       "uvx",
+    #       "--from",
+    #       "git+https://github.com/therealtimex/doctranslate[docling]",
+    #       "doctranslate",
+    #       "translate",
+    #       "-h"
+    #     ],
+    #     "help_str": ""
+    #   }
+    # ]
 
     for tool_package in tool_packages:
         tool_package_name = None
