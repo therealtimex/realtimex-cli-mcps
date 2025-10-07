@@ -231,8 +231,12 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
     if not exec_cmd:
         return None
 
+    
+
     if not doc_str:
         doc_str = load_doc_str(cli_name, cli_version)
+
+    # print(doc_str)
 
     if not doc_str and help_cmd:
         doc_str = get_doc_str(help_cmd, my_env)
