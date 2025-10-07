@@ -55,7 +55,8 @@ def main():
 
         # print(tool_package)
         func = setup(cli_name=tool_package_name, exec_cmd=tool_package_cmd, help_cmd=tool_package_help_cmd, doc_str=tool_package_doc_str, cli_version=tool_package_version)
-        mcp.tool(func)
+        if func:
+            mcp.tool(func)
 
     mcp.run()
     # import asyncio

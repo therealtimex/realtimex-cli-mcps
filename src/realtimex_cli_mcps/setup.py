@@ -12,8 +12,6 @@ def run_cli(cmd,env):
     import subprocess
     import json
 
-    # with open("/Users/phuongnguyen/Documents/test.txt", 'w') as f:
-    #     f.write(json.dumps(cmd))
     process = subprocess.Popen(
         cmd,
         # ["ls","--color=always"],
@@ -214,20 +212,33 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
     elif cli_name == "doctranslate_translate":
         from .tools.doctranslate_translate.setup import setup as doctranslate_translate_setup
         exec_cmd, help_cmd, doc_str, func_spec, my_env = doctranslate_translate_setup(cli_name,cli_version)
-    else:
+    # else:
+    #     doc_str = load_doc_str(cli_name, cli_version)
+    #     func_spec = load_func_spec(cli_name, cli_version)
+
+    if not exec_cmd:
+        return None
+
+    if not doc_str:
         doc_str = load_doc_str(cli_name, cli_version)
-        func_spec = load_func_spec(cli_name, cli_version)
 
     if not doc_str and help_cmd:
         doc_str = get_doc_str(help_cmd)
+
+    if doc_str:
         save_doc_str_cache(cli_name,cli_version,doc_str)
-        # print(doc_str)
+
+    if not doc_str:
+        return None
 
     if not func_spec:
         func_spec = get_func_spec(cli_name, doc_str)
-        save_func_spec_cache(cli_name,cli_version,func_spec)
-        # print(func_spec)
     
+    if func_spec:
+        save_func_spec_cache(cli_name,cli_version,func_spec)
+
+    if not func_spec:
+        return None
     
     func = create_function_from_json(exec_cmd, func_spec, my_env)
 
