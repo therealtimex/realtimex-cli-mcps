@@ -10,6 +10,8 @@ jobs:
   tag:
     name: Create Git Tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       tag_exists: ${{ steps.check_tag.outputs.tag_exists }}
       version: ${{ steps.get_version.outputs.VERSION }}
@@ -93,6 +95,8 @@ jobs:
   github-release:
     name: Create GitHub Release
     needs: [tag, build]
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     if: needs.tag.outputs.tag_exists == 'false'
     steps:
