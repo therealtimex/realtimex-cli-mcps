@@ -74,6 +74,9 @@ def unzip_file(file_path, extract_to, folder=""):
         shutil.move(file_path, extract_to)
         # raise ValueError(f"Unsupported file format: {file_path}")
 
+def get_base_user_dir():
+    return os.path.expanduser("~")
+
 def get_realtimex_dir():
     return os.path.join(os.path.expanduser("~"),".realtimex.ai")
 
@@ -114,6 +117,53 @@ def get_uvx_executable():
         return os.path.join(get_realtimex_dir(),"Resources","envs","Scripts","uvx.exe")
 
     return os.path.join(get_realtimex_dir(),"Resources","envs","bin","uvx")
+
+def get_nvm_dir():
+    path = os.path.join(get_base_user_dir(),".nvm")
+    if os.path.exists(path):
+        return path
+    path = os.path.join('c:', os.sep, "nvm")
+    if os.path.exists(path):
+        return path
+    return ""
+
+
+def get_nvm_inc():
+    path = os.path.join(get_nvm_dir(),"versions","node","v22.16.0","include","node")
+    if os.path.exists(path):
+        return path
+    path = os.path.join('c:', os.sep, "nvm")
+    if os.path.exists(path):
+        return path
+    return ""
+
+def get_nvm_bin():
+    path = os.path.join(get_nvm_dir(),"versions","node","v22.16.0","bin")
+    if os.path.exists(path):
+        return path
+    path = os.path.join('c:', os.sep, "nvm")
+    if os.path.exists(path):
+        return path
+    return ""
+
+def get_npx_executable():
+    unix_realtimex_npx_path = os.path.join(get_base_user_dir(),".nvm","versions","node","v22.16.0","bin","npx")
+    if os.path.exists(unix_realtimex_npx_path):
+        return unix_realtimex_npx_path
+    win_realtimex_npx_path = os.path.join('c:', os.sep, "nvm", "v22.16.0", "npx.cmd")
+    if os.path.exists(win_realtimex_npx_path):
+        return win_realtimex_npx_path
+    return "npx"
+
+def get_nvm_env():
+    default_env = {
+        'NVM_INC': get_nvm_inc(),
+        'NVM_CD_FLAGS': '-q',
+        'NVM_DIR': get_nvm_dir(),
+        'PATH': f'{os.environ.copy()["PATH"]}{os.pathsep}{get_nvm_bin()}',
+        'NVM_BIN': get_nvm_bin()
+    }
+    return default_env
 
 def get_current_version():
     pass

@@ -1,9 +1,9 @@
-from .utils import get_uvx_executable, save_func_spec_cache, save_doc_str_cache, load_env_configs, load_doc_str, load_func_spec
+from .utils import get_uvx_executable, get_nvm_env, get_npx_executable, save_func_spec_cache, save_doc_str_cache, load_env_configs, load_doc_str, load_func_spec
 
-def get_doc_str(help_cmd):
+def get_doc_str(help_cmd,my_env):
     import subprocess
     
-    docstring_process = subprocess.run(help_cmd, capture_output=True, text=True)
+    docstring_process = subprocess.run(help_cmd, capture_output=True, text=True, env=my_env)
     docstring = docstring_process.stdout.strip()
     
     return docstring
@@ -198,13 +198,7 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
 
     func_spec = None
     my_env = os.environ.copy()
-
-    if exec_cmd:
-        if exec_cmd[0] == "uvx":
-            exec_cmd[0] = get_uvx_executable()
-    if help_cmd:
-        if help_cmd[0] == "uvx":
-            help_cmd[0] = get_uvx_executable()
+            
 
     if cli_name == "ansiweather":
         from .tools.ansiweather.setup import setup as ansiweather_setup
@@ -216,6 +210,24 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
     #     doc_str = load_doc_str(cli_name, cli_version)
     #     func_spec = load_func_spec(cli_name, cli_version)
 
+    if exec_cmd:
+        if exec_cmd[0] == "uvx":
+            exec_cmd[0] = get_uvx_executable()
+        if exec_cmd[0] == "npx":
+            exec_cmd[0] = get_npx_executable()
+            nvm_env = get_nvm_env()
+            for nvm_env_key in nvm_env:
+                my_env[nvm_env_key] = nvm_env[nvm_env_key]
+
+    if help_cmd:
+        if help_cmd[0] == "uvx":
+            help_cmd[0] = get_uvx_executable()
+        if help_cmd[0] == "npx":
+            help_cmd[0] = get_npx_executable()
+            nvm_env = get_nvm_env()
+            for nvm_env_key in nvm_env:
+                my_env[nvm_env_key] = nvm_env[nvm_env_key]
+
     if not exec_cmd:
         return None
 
@@ -223,7 +235,7 @@ def setup(cli_name:str, exec_cmd = None, help_cmd = None, doc_str:str = None, cl
         doc_str = load_doc_str(cli_name, cli_version)
 
     if not doc_str and help_cmd:
-        doc_str = get_doc_str(help_cmd)
+        doc_str = get_doc_str(help_cmd, my_env)
 
     if doc_str:
         save_doc_str_cache(cli_name,cli_version,doc_str)
