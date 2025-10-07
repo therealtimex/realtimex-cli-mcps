@@ -24,6 +24,7 @@ To run your CLI as an MCP server using `uvx` with a specific configuration, you 
     "realtimex-cli-mcps": {
       "command": "uvx",
       "args": [
+        "--from",
         "realtimex-cli-mcps",
         "run-cli-as-mcps"
       ],
@@ -43,6 +44,7 @@ To run your CLI as an MCP server using `uvx` with a specific configuration, you 
     "realtimex-cli-mcps": {
       "command": "uvx",
       "args": [
+        "--from",
         "realtimex-cli-mcps",
         "run-cli-as-mcps"
       ],
@@ -62,6 +64,7 @@ To run your CLI as an MCP server using `uvx` with a specific configuration, you 
     "realtimex-cli-mcps": {
       "command": "uvx",
       "args": [
+        "--from",
         "realtimex-cli-mcps",
         "run-cli-as-mcps"
       ],
