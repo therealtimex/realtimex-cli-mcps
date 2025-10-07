@@ -22,10 +22,47 @@ To run your CLI as an MCP server using `uvx` with a specific configuration, you 
 {
   "mcpServers": {
     "realtimex-cli-mcps": {
-      "command": "/Users/phuongnguyen/.realtimex.ai/Resources/envs/bin/uvx",
+      "command": "uvx",
       "args": [
-        "--from",
-        "git+https://oauth2:5yTHSE9k34jbWgzXmsxQ@rtgit.rta.vn/rtlab/rtwebteam/realtimex-cli-mcps",
+        "realtimex-cli-mcps",
+        "run-cli-as-mcps"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "",
+        "OPENAI_BASE_URL": "",
+        "TOOL_PACKAGES": "[{\"name\": \"ansiweather@latest\"}, {\"name\": \"doctranslate_translate\"}]"
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "mcpServers": {
+    "realtimex-cli-mcps": {
+      "command": "uvx",
+      "args": [
+        "realtimex-cli-mcps",
+        "run-cli-as-mcps"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "",
+        "OPENAI_BASE_URL": "",
+        "TOOL_PACKAGES": "[{\"cmd\": [\"uvx\", \"cowsay\"], \"doc_str\": \"\", \"help_cmd\": [\"uvx\", \"cowsay\", \"-h\"], \"name\": \"cowsay\"}]"
+      }
+    }
+  }
+}
+```
+
+```json
+{
+  "mcpServers": {
+    "realtimex-cli-mcps": {
+      "command": "uvx",
+      "args": [
+        "realtimex-cli-mcps",
         "run-cli-as-mcps"
       ],
       "env": {
