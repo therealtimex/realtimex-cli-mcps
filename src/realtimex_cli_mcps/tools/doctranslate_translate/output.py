@@ -5,6 +5,7 @@ def output(output):
     import json
     import mimetypes
     import shutil
+    import os
 
     log = output
 
