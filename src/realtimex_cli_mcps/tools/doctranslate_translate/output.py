@@ -1,9 +1,10 @@
-from realtimex_cli_mcps.utils import get_realtimex_storage_dir
+from realtimex_cli_mcps.utils import get_realtimex_storage_dir, get_realtimex_frontend_storage_dir
 
 def output(output):
     import re
     import json
     import mimetypes
+    import shutil
 
     log = output
 
@@ -63,6 +64,15 @@ def output(output):
             document_type = "code"
         if translated_file['file'].lower().endswith(".zip"):
             continue
+        # fix temp
+        frontend_storage_dir = get_realtimex_frontend_storage_dir()
+        if not os.path.exists(frontend_storage_dir):
+            os.makedirs(frontend_storage_dir,exist_ok=True)
+        frontend_storage_file = os.path.join(frontend_storage_dir,translated_file['file'].replace(get_realtimex_storage_dir(),""))
+        if os.path.exists(frontend_storage_file):
+            os.remove(frontend_storage_file)
+        shutil.copy(translated_file['file'], frontend_storage_file)
+
         ui_component["data"]["content"].append({
             "type": document_type,
             "url" : translated_file['file'].replace(get_realtimex_storage_dir(),"/storage"),
