@@ -45,6 +45,25 @@ def output(output):
             "file": f,
             "mime": mime or "application/octet-stream"
         })
+        
+    ui_component = {
+        "type": "responseData",
+        "dataType": "files",
+        "data": {
+            "content": [
+                
+            ]
+        }
+    }
+    for translated_file in data["translated_files"]:
+        ui_component["data"]["content"].append({
+            "type": "document",
+            "url" : translated_file['file'],
+            "mime" :  translated_file['mime'],
+        })
+    
+    if len(ui_component["data"]["content"]) > 0:
+        data["ui-components"] = [ui_component]
 
     # --- Print JSON ---
     return data
