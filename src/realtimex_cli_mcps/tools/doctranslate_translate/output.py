@@ -70,9 +70,9 @@ def output(output):
         if not os.path.exists(frontend_storage_dir):
             os.makedirs(frontend_storage_dir,exist_ok=True)
         
-        frontend_storage_file = os.path.join(frontend_storage_dir,translated_file['file'].replace(get_realtimex_storage_dir(),""))
-        
+        frontend_storage_file = translated_file['file'].replace(get_realtimex_storage_dir(),frontend_storage_dir)
         frontend_storage_file_dir = os.path.dirname(frontend_storage_file)
+        
         if not os.path.exists(frontend_storage_file_dir):
             os.makedirs(frontend_storage_file_dir,exist_ok=True)
         

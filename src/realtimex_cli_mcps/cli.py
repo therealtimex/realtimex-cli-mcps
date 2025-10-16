@@ -40,15 +40,16 @@ def main():
             mcp.tool(func)
 
     mcp.run()
+    # print("sdfdsf")
     # import asyncio
     # asyncio.run(test())
 
-async def test():
-    async with Client(mcp) as client:
-        tools = await client.list_tools()
-        print("tools",tools)
-        result = await client.call_tool("ansiweather", {"location": "Hanoi"})
-        print(result.content[0].text)
+# async def test():
+#     async with Client(mcp) as client:
+#         tools = await client.list_tools()
+#         print("tools",tools)
+#         result = await client.call_tool("doctranslate_translate", {"input": "/Users/phuongnguyen/.realtimex.ai/storage/working-data/document-translation/index.md", "out_dir": "/Users/phuongnguyen/.realtimex.ai/storage/working-data/document-translation", "to_lang": "Vietnamese"})
+#         print(result.content[0].text)
 
 # if __name__ == "__main__":
 #     import asyncio
