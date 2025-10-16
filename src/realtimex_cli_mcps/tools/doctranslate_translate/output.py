@@ -1,3 +1,5 @@
+from realtimex_cli_mcps.utils import get_realtimex_storage_dir
+
 def output(output):
     import re
     import json
@@ -56,9 +58,14 @@ def output(output):
         }
     }
     for translated_file in data["translated_files"]:
+        document_type = "document"
+        if translated_file['file'].lower().endswith(".html") or translated_file['file'].lower().endswith(".md"):
+            document_type = "code"
+        if translated_file['file'].lower().endswith(".zip"):
+            continue
         ui_component["data"]["content"].append({
-            "type": "document",
-            "url" : translated_file['file'],
+            "type": document_type,
+            "url" : translated_file['file'].replace(get_realtimex_storage_dir(),"/storage"),
             "mime" :  translated_file['mime'],
         })
     

@@ -86,6 +86,9 @@ def get_cache_dir():
 def get_realtimex_cli_tools_dir():
     return os.path.join(get_realtimex_dir(),"Resources","cli-tools")
 
+def get_realtimex_storage_dir():
+    return os.path.realpath(os.path.join(get_realtimex_dir(),"Resources","server","storage"))
+
 def load_env_configs():
     from dotenv import dotenv_values
 
