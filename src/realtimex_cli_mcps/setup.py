@@ -25,7 +25,13 @@ def run_cli(cmd,env):
 
     stdout, stderr = process.communicate()
 
-    return stdout
+    result = None
+
+    if "doctranslate" in cmd and "translate" in  cmd:
+        from .tools.doctranslate_translate.output import output as doctranslate_translate_output
+        result = doctranslate_translate_output(stdout)
+
+    return result
 
 def get_func_spec(cli_name, doc_str):
     from openai import OpenAI
