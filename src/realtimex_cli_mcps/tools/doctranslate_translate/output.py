@@ -41,7 +41,7 @@ def output(output):
         )
 
     # --- Extract generated files & detect mime types ---
-    files = re.findall(r"Generated:\s+(\S+)", log)
+    files = re.findall(r"Generated:\s+(.+)", log)
     data["translated_files"] = []
     for f in files:
         mime, _ = mimetypes.guess_type(f)
