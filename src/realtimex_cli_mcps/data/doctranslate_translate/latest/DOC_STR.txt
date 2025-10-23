@@ -1,0 +1,113 @@
+usage: doctranslate translate [-h] [--out-dir OUT_DIR]
+                              [--workflow {markdown_based,txt,json,xlsx,docx,srt,epub,html,ass}]
+                              [--formats [FORMATS ...]] [--preserve-layout]
+                              [--save-attachments] [--docpkg]
+                              [--emit-manifest EMIT_MANIFEST]
+                              [--progress {none,jsonl}] [--skip-translate]
+                              [--base-url BASE_URL] [--api-key API_KEY]
+                              [--model-id MODEL_ID] [--to-lang TO_LANG]
+                              [--custom-prompt CUSTOM_PROMPT]
+                              [--chunk-size CHUNK_SIZE]
+                              [--concurrent CONCURRENT]
+                              [--temperature TEMPERATURE] [--timeout TIMEOUT]
+                              [--thinking {default,enable,disable}]
+                              [--retry RETRY]
+                              [--insert-mode {replace,append,prepend}]
+                              [--separator SEPARATOR] [--json-path JSON_PATH]
+                              [--xlsx-regions [XLSX_REGIONS ...]]
+                              [--convert-engine {mineru,mineru_local,docling,identity}]
+                              [--mineru-token MINERU_TOKEN]
+                              [--mineru-formula-ocr]
+                              [--mineru-model-version {pipeline,vlm}]
+                              [--mineru-local-mode {cli_dir,cli_zip}]
+                              [--mineru-local-cmd MINERU_LOCAL_CMD]
+                              [--mineru-local-args MINERU_LOCAL_ARGS]
+                              [--mineru-local-md-file MINERU_LOCAL_MD_FILE]
+                              [--glossary-enable]
+                              [--glossary-base-url GLOSSARY_BASE_URL]
+                              [--glossary-api-key GLOSSARY_API_KEY]
+                              [--glossary-model-id GLOSSARY_MODEL_ID]
+                              input
+
+positional arguments:
+  input                 Path to the input file
+
+options:
+  -h, --help            show this help message and exit
+  --out-dir OUT_DIR     Output directory (default: output)
+  --workflow {markdown_based,txt,json,xlsx,docx,srt,epub,html,ass}
+                        Override the inferred workflow type (default: None)
+  --formats [FORMATS ...]
+                        Export formats, e.g. html markdown markdown_zip json
+                        xlsx csv docx srt epub (default: None)
+  --preserve-layout     (PDF) Use Docling native HTML to better preserve
+                        layout (default: False)
+  --save-attachments    Save attachments (e.g., docling.md, glossary)
+                        (default: False)
+  --docpkg              Input is a document package directory (e.g., from
+                        docling CLI). Auto-detect index.html or document.md
+                        (default: False)
+  --emit-manifest EMIT_MANIFEST
+                        Write JSON manifest to this path (default: None)
+  --progress {none,jsonl}
+                        Emit step-by-step progress events (default: none)
+  --skip-translate      Parse/export only; do not call LLM (default: False)
+  --base-url BASE_URL   LLM API base URL; defaults to OPENAI_BASE_URL
+                        (default: None)
+  --api-key API_KEY     LLM API key; defaults to OPENAI_API_KEY (default:
+                        None)
+  --model-id MODEL_ID   Model ID; defaults to OPENAI_MODEL (default: None)
+  --to-lang TO_LANG     Target language (default: English)
+  --custom-prompt CUSTOM_PROMPT
+                        Custom translation prompt (default: None)
+  --chunk-size CHUNK_SIZE
+                        Chunk size (default: 3000)
+  --concurrent CONCURRENT
+                        Concurrency (default: 30)
+  --temperature TEMPERATURE
+                        Temperature (default: 0.7)
+  --timeout TIMEOUT     Timeout (seconds) (default: 1200)
+  --thinking {default,enable,disable}
+                        Thinking mode (provider-specific) (default: disable)
+  --retry RETRY         Retry count on failure (default: 2)
+  --insert-mode {replace,append,prepend}
+                        Insert mode (for txt/xlsx/docx/srt/epub/html)
+                        (default: replace)
+  --separator SEPARATOR
+                        Separator used in append/prepend modes (default: )
+  --json-path JSON_PATH
+                        JSONPath expression; can be repeated. Default: $..*
+                        (default: None)
+  --xlsx-regions [XLSX_REGIONS ...]
+                        XLSX translation regions, e.g. Sheet1!A1:B10 C:D E5 …
+                        (default: None)
+  --convert-engine {mineru,mineru_local,docling,identity}
+                        markdown_based convert engine (default: None)
+  --mineru-token MINERU_TOKEN
+                        MinerU API token (or env MINERU_TOKEN) (default: None)
+  --mineru-formula-ocr  MinerU formula OCR switch (default: False)
+  --mineru-model-version {pipeline,vlm}
+                        MinerU model version (default: vlm)
+  --mineru-local-mode {cli_dir,cli_zip}
+                        Local MinerU run mode: output directory or output zip
+                        (default: cli_dir)
+  --mineru-local-cmd MINERU_LOCAL_CMD
+                        Local MinerU executable command or path (default:
+                        mineru)
+  --mineru-local-args MINERU_LOCAL_ARGS
+                        Local MinerU argument template, use {input} and
+                        {output} placeholders (default: --input {input}
+                        --output {output})
+  --mineru-local-md-file MINERU_LOCAL_MD_FILE
+                        Markdown filename in local MinerU output (default:
+                        full.md)
+  --glossary-enable     Enable glossary generation agent (default: False)
+  --glossary-base-url GLOSSARY_BASE_URL
+                        Glossary agent base URL (defaults to main) (default:
+                        None)
+  --glossary-api-key GLOSSARY_API_KEY
+                        Glossary agent API key (defaults to main) (default:
+                        None)
+  --glossary-model-id GLOSSARY_MODEL_ID
+                        Glossary agent model ID (defaults to main) (default:
+                        None)
